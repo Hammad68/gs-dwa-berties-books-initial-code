@@ -16,7 +16,7 @@ router.get('/search-result', function (req, res, next) {
     // execute sql query
     db.query(sqlquery, searchPattren, (err, result) => {
         if (err) {
-            next(err);
+            return next(err);
         }
         res.render('searchResults.ejs', {availableBooks: result});
     });
@@ -28,14 +28,13 @@ router.get('/list', function(req, res, next) {
     // execute sql query
     db.query(sqlquery, (err, result) => {
         if (err) {
-            next(err)
+            return next(err)
         }
         res.render('list.ejs', {availableBooks: result})
     });
 });
 
 router.get('/add-book', function (req, res, next) {
-    //searching in the database
     res.render('addbook.ejs');
 });
 
@@ -46,7 +45,7 @@ router.post('/bookadded', function (req, res, next) {
     let newrecord = [req.body.bookname, req.body.price]
     db.query(sqlquery, newrecord, (err, result) => {
         if (err) {
-            next(err)
+            return next(err)
         }
         else
             res.send(' This book is added to database, name: '+ req.body.bookname + ' price '+ req.body.price);
@@ -59,7 +58,7 @@ router.get('/bargainbooks', function(req, res, next) {
     // execute sql query
     db.query(sqlquery, (err, result) => {
         if (err) {
-            next(err)
+            return next(err)
         }
         res.render('bargainbooks.ejs', {availableBooks: result})
     });
